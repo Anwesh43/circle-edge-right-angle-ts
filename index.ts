@@ -220,3 +220,25 @@ class CircleEdgeRightAngle {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+
+    cera : CircleEdgeRightAngle = new CircleEdgeRightAngle()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.cera.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.cera.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.cera.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
